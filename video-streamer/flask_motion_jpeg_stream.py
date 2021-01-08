@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, Response
-from camera import Camera
+from camera import Camera 
+import cv2
 
 app = Flask(__name__)
 
