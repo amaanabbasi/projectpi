@@ -19,3 +19,4 @@ __HC-SR04__
 2) Echo takes 5V it can damage the GPIO pin to which it is connected to, so use resistors.
 3) I think damage will happen if you use it over extended period of time, I teste for a couple of seconds that worked.
 
+![](https://cms-assets.tutsplus.com/uploads/users/228/posts/20051/image/Data%20pins.png)
