@@ -10,6 +10,11 @@ __l293D__
 
 ![](https://cms-assets.tutsplus.com/uploads/users/228/posts/20051/image/Data%20pins.png)
 
+__L298N__
+
+1) Reduces number of jumper wires
+2) work on the same principles as the l293D.
+
 # sonar.py
 
 For measuring distance. 
