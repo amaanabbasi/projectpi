@@ -23,8 +23,8 @@ class CarMotionControl():
     print ('S Reverse')
     print ('A Left')
     print ('D Right')
-    print ('Q Stop')
-    print ('E Exit Programme')
+    print ('P Pause')
+    print ('esc or ctrl+c Exit Programme')
 
 
 
@@ -52,41 +52,15 @@ class CarMotionControl():
         GPIO.output(MotorL, True)
         
     def stop(self):
+        print("Stop")
         GPIO.output(MotorF, False)
         GPIO.output(MotorB, False)
         GPIO.output(MotorR, False)
         GPIO.output(MotorL, False)
-
-
-# setting up the user input system
-def getch(self):
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(sys.stdin.fileno())
-        ch = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return ch
-
-while True:
-    char = getch()
-    if(char == "w"):
-        forward()
-    if(char == "q"):
-        stop()
-    if(char == "s"):
-        reverse()
-    if(char == "a"):
-        left()
-    if(char == "d"):
-        right()
-    if(char == "e"):
-        stop()
-        print("Stopping motor")
-
-    if(char == 'q'):
-        print("Stopping motor")
+    
+    def exit(self):
+        print("Exiting")
         stop()
         GPIO.cleanup()
         quit()
+
