@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <title>Video Streaming Demonstration</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="columns">
+        <div class="column is-half">
+          <h1>Live View</h1>
+          <img src="{{ url_for('video_feed') }}">
+        </div>
+        <div class="column is-half">
+          <h1>Object Detection View</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    $(document).on("keydown", function (event) {
+      if (event.keyCode === 87 || event.keyCode === 119) { // W
+        console.log("W");
+        $.ajax({
+          type: 'GET',
+          url: "/forward",
+        });
+      } else if (event.keyCode === 83 || event.keyCode === 115) { // S
+        console.log("S");
+        $.ajax({
+          type: 'GET',
+          url: "/reverse",
+        });
+      } else if (event.keyCode === 65 || event.keyCode === 97) { // A
+        $.ajax({
+          type: 'GET',
+          url: "/left",
+        });
+      }
+      else if (event.keyCode === 68 || event.keyCode === 100) { // D
+        $.ajax({
+          type: 'GET',
+          url: "/right",
+        });
+      }
+      else if (event.keyCode === 80 || event.keyCode === 112) { // P
+        $.ajax({
+          type: 'GET',
+          url: "/stop",
+        });
+      }
+    })
+  </script>
+
+</body>
+
+</html>

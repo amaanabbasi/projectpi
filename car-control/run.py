@@ -2,7 +2,7 @@ import keyboard
 import carmotioncontrol
 from config import *
 
-car = carmotioncontrol.CarMotionControl(MotorB, MotorF, MotorR, MotorL)
+car = carmotioncontrol.CarMotionControl(MotorF, MotorB, MotorR, MotorL)
 
 while True:
     if keyboard.read_key() == 'w':
