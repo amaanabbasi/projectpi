@@ -1,4 +1,4 @@
-import keyboard
+
 import carmotioncontrol
 from config import *
 
