@@ -19,3 +19,5 @@ This accomplished by ajax calls at routes
  d -> /right
  p -> /stop
 ```
+
+![Untitled drawing (5)](https://user-images.githubusercontent.com/30196830/108810912-2dfbf100-75d2-11eb-8e4c-8bbd49c53435.png)
