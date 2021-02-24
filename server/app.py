@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, Response
-from video.camera import Camera 
+from camera.camera import Camera 
 import cv2
 from carcontrol.run import forward, reverse, left, right, stop
 
