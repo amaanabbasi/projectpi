@@ -4,18 +4,18 @@ import sys, termios, time, tty
 
 class CarMotionControl():
 
-    def __init__(self, MotorR, MotorB, MotorF, MotorL):
+    def __init__(self, self.MotorR, self.MotorB, self.MotorF, self.MotorL):
         GPIO.setmode(GPIO.BOARD)
         
-        self.MotorF =MotorF
-        self.MotorB =MotorB
-        self.MotorL =MotorL
-        self.MotorR =MotorR
+        self.self.MotorF =self.MotorF
+        self.self.MotorB =self.MotorB
+        self.self.MotorL =self.MotorL
+        self.self.MotorR =self.MotorR
 
-        GPIO.setup(self.MotorF, GPIO.OUT)
-        GPIO.setup(self.MotorB, GPIO.OUT)
-        GPIO.setup(self.MotorL, GPIO.OUT)
-        GPIO.setup(self.MotorR, GPIO.OUT)
+        GPIO.setup(self.self.MotorF, GPIO.OUT)
+        GPIO.setup(self.self.MotorB, GPIO.OUT)
+        GPIO.setup(self.self.MotorL, GPIO.OUT)
+        GPIO.setup(self.self.MotorR, GPIO.OUT)
 
 
     #display user controls
@@ -28,35 +28,35 @@ class CarMotionControl():
 
 
 
-    print("Turning motor on")
+    print("Turning Motor on")
     def forward(self):
         
         print ('W forward')
-        GPIO.output(MotorF, True)
-        GPIO.output(MotorB, False)
+        GPIO.output(self.MotorF, True)
+        GPIO.output(self.MotorB, False)
 
     def reverse(self):
 
         print ('S Reverse')
-        GPIO.output(MotorF, False)
-        GPIO.output(MotorB, True)
+        GPIO.output(self.MotorF, False)
+        GPIO.output(self.MotorB, True)
 
     def right(self):
         print ('D Right')
-        GPIO.output(MotorR, True)
-        GPIO.output(MotorL, False)
+        GPIO.output(self.MotorR, True)
+        GPIO.output(self.MotorL, False)
 
     def left(self):
         print('A Left')
-        GPIO.output(MotorR, False)
-        GPIO.output(MotorL, True)
+        GPIO.output(self.MotorR, False)
+        GPIO.output(self.MotorL, True)
         
     def stop(self):
         print("Stop")
-        GPIO.output(MotorF, False)
-        GPIO.output(MotorB, False)
-        GPIO.output(MotorR, False)
-        GPIO.output(MotorL, False)
+        GPIO.output(self.MotorF, False)
+        GPIO.output(self.MotorB, False)
+        GPIO.output(self.MotorR, False)
+        GPIO.output(self.MotorL, False)
     
     def exit(self):
         print("Exiting")

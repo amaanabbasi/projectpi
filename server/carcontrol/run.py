@@ -1,6 +1,7 @@
-import keyboard
-import carcontrol.carmotioncontrol
+
+from carcontrol import carmotioncontrol
 from carcontrol.config import *
+import sys, termios, time, tty
 
 car = carmotioncontrol.CarMotionControl(MotorF, MotorB, MotorR, MotorL)
 
@@ -16,27 +17,36 @@ def right():
 def stop():
     car.stop()
 
+def getch():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return ch
 
 
 if __name__ == '__main__':
 
     while True:
-        if keyboard.read_key() == 'w':
+        if (char == "w"):
             car.forward()
 
-        if keyboard.read_key() == 's':
+        if (char == 's'):
             car.reverse()
 
-        if keyboard.read_key() == 'a':
+        if (char == 'a'):
             car.left()   
 
-        if keyboard.read_key() == 'd':
+        if (char == 'd'):
             car.right()
         
-        if keyboard.read_key() == 'p':
+        if (char == 'p'):
             car.stop()
         
-        if keyboard.read_key() == 'esc' or 'ctrl+c':
+        if (char == 'e'):
             car.exit()
 
         
