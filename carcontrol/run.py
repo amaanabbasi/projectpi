@@ -1,6 +1,5 @@
-import keyboard
-import carcontrol.carmotioncontrol
-from carcontrol.config import *
+import carmotioncontrol
+from config import *
 
 car = carmotioncontrol.CarMotionControl(MotorF, MotorB, MotorR, MotorL)
 
@@ -15,28 +14,35 @@ def right():
     car.right()
 def stop():
     car.stop()
-
+def exit():
+    car.exit()
+def speed():
+    car.speed()
 
 
 if __name__ == '__main__':
 
     while True:
-        if keyboard.read_key() == 'w':
+        if (char == "w"):
             car.forward()
 
-        if keyboard.read_key() == 's':
+        if (char == 's'):
             car.reverse()
 
-        if keyboard.read_key() == 'a':
+        if (char == 'a'):
             car.left()   
 
-        if keyboard.read_key() == 'd':
+        if (char == 'd'):
             car.right()
         
-        if keyboard.read_key() == 'p':
+        if (char == 'p'):
             car.stop()
         
-        if keyboard.read_key() == 'esc' or 'ctrl+c':
+        if (chat == 'h'):
+            car.speed()
+
+        if (char == 'e'):
             car.exit()
+
 
         

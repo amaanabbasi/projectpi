@@ -1,6 +1,6 @@
 # Controlling the car using hough transform
 # https://www.hackster.io/Abhinav_Abhi/road-lane-detection-with-raspberry-pi-a4711f#team
-from carcontrol.run import forward, reverse, left, right, stop
+from run import forward, reverse, left, right, stop, hh
 
 import time
 import cv2
@@ -44,4 +44,5 @@ while True:
     key = cv2.waitKey(1) & 0xFF
     #    image.truncate(0)
     if key == ord("q"):
+        exit()
         break

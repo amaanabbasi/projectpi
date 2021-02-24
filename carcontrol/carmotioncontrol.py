@@ -4,19 +4,22 @@ import sys, termios, time, tty
 
 class CarMotionControl():
 
-    def __init__(self, self.MotorR, self.MotorB, self.MotorF, self.MotorL):
+    def __init__(self, MotorF, MotorB, MotorR, MotorL):
         GPIO.setmode(GPIO.BOARD)
         
-        self.self.MotorF =self.MotorF
-        self.self.MotorB =self.MotorB
-        self.self.MotorL =self.MotorL
-        self.self.MotorR =self.MotorR
+        self.MotorF =MotorF
+        self.MotorB =MotorB
+        self.MotorL =MotorL
+        self.MotorR =MotorR
 
-        GPIO.setup(self.self.MotorF, GPIO.OUT)
-        GPIO.setup(self.self.MotorB, GPIO.OUT)
-        GPIO.setup(self.self.MotorL, GPIO.OUT)
-        GPIO.setup(self.self.MotorR, GPIO.OUT)
+        GPIO.setup(self.MotorF, GPIO.OUT)
+        GPIO.setup(self.MotorB, GPIO.OUT)
+        GPIO.setup(self.MotorL, GPIO.OUT)
+        GPIO.setup(self.MotorR, GPIO.OUT)
 
+        # pwm Pulse Width Modulation controls the speed of the motors the rotating speed
+        self.pwm = GPIO.PWM(self.MotorF, 1000)
+        self.pwm.start(50)
 
     #display user controls
     print ('W forward')
@@ -58,6 +61,16 @@ class CarMotionControl():
         GPIO.output(self.MotorR, False)
         GPIO.output(self.MotorL, False)
     
+    # For speed control, switching b/w two speed values
+    # 50 & 100 
+    def speed(self):
+        if self.pwm == 50:
+            self.pwm.ChangeDutyCycle(100)
+            print("Full Speed")
+        elif self.pwm == 100:
+            self.pwm.ChangeDutyCycle(50)
+            print("Half Speed")
+
     def exit(self):
         print("Exiting")
         stop()
