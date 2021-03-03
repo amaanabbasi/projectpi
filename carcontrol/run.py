@@ -1,6 +1,6 @@
 import carmotioncontrol
 from config import *
-
+import sys, termios, time, tty
 car = carmotioncontrol.CarMotionControl(MotorF, MotorB, MotorR, MotorL)
 
 
@@ -19,10 +19,21 @@ def exit():
 def speed():
     car.speed()
 
+def getch():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return ch
 
 if __name__ == '__main__':
 
     while True:
+
+        char = getch()
         if (char == "w"):
             car.forward()
 
@@ -38,7 +49,7 @@ if __name__ == '__main__':
         if (char == 'p'):
             car.stop()
         
-        if (chat == 'h'):
+        if (char == 'h'):
             car.speed()
 
         if (char == 'e'):

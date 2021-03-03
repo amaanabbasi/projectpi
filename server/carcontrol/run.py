@@ -31,6 +31,7 @@ def getch():
 if __name__ == '__main__':
 
     while True:
+        char = getch()
         if (char == "w"):
             car.forward()
 

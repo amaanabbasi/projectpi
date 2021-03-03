@@ -19,7 +19,7 @@ class CarMotionControl():
 
         # pwm Pulse Width Modulation controls the speed of the motors the rotating speed
         self.pwm = GPIO.PWM(self.MotorF, 1000)
-        self.pwm.start(50)
+        
 
     #display user controls
     print ('W forward')
@@ -64,6 +64,7 @@ class CarMotionControl():
     # For speed control, switching b/w two speed values
     # 50 & 100 
     def speed(self):
+        # self.pwm.start(100)
         if self.pwm == 50:
             self.pwm.ChangeDutyCycle(100)
             print("Full Speed")

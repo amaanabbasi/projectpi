@@ -1,6 +1,6 @@
 # Controlling the car using hough transform
 # https://www.hackster.io/Abhinav_Abhi/road-lane-detection-with-raspberry-pi-a4711f#team
-from run import forward, reverse, left, right, stop, hh
+from run import forward, reverse, left, right, stop, speed
 
 import time
 import cv2
@@ -11,12 +11,14 @@ minLineLength = 5
 maxLineGap = 10
 time.sleep(0.1)
 camera = cv2.VideoCapture(0)
+speed()
 while True:
     _, image = camera.read()
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     edged = cv2.Canny(blurred, 85, 85)
     lines = cv2.HoughLinesP(edged,1,np.pi/180,10,minLineLength,maxLineGap)
+    
     try:
         if(lines.any() !=None):
             for x in range(0, len(lines)):
@@ -30,19 +32,19 @@ while True:
     #print(theta)GPIO pins were connected to arduino for servo steering control
     threshold=6
     print(theta)
-    if(theta>threshold):
-        left()
-        print("left")
-    if(theta<-threshold):
-        right()
-        print("right")
-    if(abs(theta)<threshold):
-        forward()
-        print ("straight")
+    # if(theta>threshold):
+    #     left()
+    #     print("left")
+    # if(theta<-threshold):
+    #     right()
+    #     print("right")
+    # if(abs(theta)<threshold):
+    #     forward()
+    #     print ("straight")
     theta=0
     cv2.imshow("Frame",image)
     key = cv2.waitKey(1) & 0xFF
     #    image.truncate(0)
     if key == ord("q"):
-        exit()
+        stop()
         break
