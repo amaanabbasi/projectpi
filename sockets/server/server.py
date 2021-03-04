@@ -4,29 +4,21 @@ import struct
 import numpy as np
 import cv2
 import math
-import RPi.GPIO as GPIO
 
-# For car control
-HOST, PORT = '', 8001
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print('Socket created')
-
-s.bind((HOST, PORT))
-print('Socket bind complete')
-s.listen(10)
-print('Socket now listening')
-
-################################
-conn, addr = s.accept()
-data = b'' 
-payload_size = struct.calcsize("=L")
+HOST_IP, HOST_PORT = '192.168.0.105', 8001
+ser_soc = socket.socket()
+ser_soc.bind((HOST_IP, HOST_PORT))
+ser_soc.listen(2)
+conn, address = ser_soc.accept()
+print("Connection Established")
+print(f"Server's addr: {HOST_IP}, port {HOST_PORT}")
+print("Waiting for video stream.")
 
 def server_program(data):
     # receive data stream. it won't accept data packet greater than 1024 bytes
     data = str(data)
     conn.send(data.encode())  # send data to the client
-##################################
 
 def detect_edges(frame):
     # filter for blue lane lines
@@ -191,16 +183,21 @@ def get_steering_angle(frame, lane_lines):
 
     return steering_angle
 
+
 class VideoStreamingTest(object):
     def __init__(self, host, port):
 
-        self.server_socket = socket.socket()
+        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.bind((host, port))
-        self.server_socket.listen(1)
+        self.server_socket.listen(10)
         self.connection, self.client_address = self.server_socket.accept()
-        self.connection = self.connection.makefile('rb')
+        
+        # self.connection = self.connection.makefile('rb')
         self.host_name = socket.gethostname()
         self.host_ip = socket.gethostbyname(self.host_name)
+
+        self.data = b''
+        self.payload_size = struct.calcsize("=L")
         self.streaming()
 
     def streaming(self):
@@ -212,20 +209,20 @@ class VideoStreamingTest(object):
                 print("Press 'q' to exit")
                 print("server")
                 # Retrieve message size
-                while len(data) < payload_size:
-                    data += conn.recv(4096)
+                while len(self.data) < self.payload_size:
+                    self.data += self.connection.recv(4096)
 
-                packed_msg_size = data[:payload_size]
-                data = data[payload_size:]
+                packed_msg_size = self.data[:self.payload_size]
+                self.data = self.data[self.payload_size:]
                 print(packed_msg_size)
                 msg_size = struct.unpack("=L", packed_msg_size)[0] ### CHANGED
 
                 # Retrieve all data based on message size
-                while len(data) < msg_size:
-                    data += conn.recv(4096)
+                while len(self.data) < msg_size:
+                    self.data += self.connection.recv(4096)
 
-                frame_data = data[:msg_size]
-                data = data[msg_size:]
+                frame_data = self.data[:msg_size]
+                self.data = self.data[msg_size:]
 
                 # Extract frame
                 frame = pickle.loads(frame_data)
@@ -241,10 +238,9 @@ class VideoStreamingTest(object):
                 heading_image = display_heading_line(lane_lines_image, steering_angle)
                 # Display
                 cv2.imshow('frame', heading_image)
-                cv2.waitKey(0)
+                cv2.waitKey(1)
 
-                if cv2.waitKey(0) & 0xFF == ord('q'):
-                    GPIO.cleanup()
+                if cv2.waitKey(1) & 0xFF == ord('q'):
                     break   
         finally:
             self.connection.close()
@@ -252,5 +248,16 @@ class VideoStreamingTest(object):
 
 if __name__ == '__main__':
     # host, port for video streaming
-    h, p = HOST, 8000
+    h, p = "192.168.0.105", 8000
+    print("s")
     VideoStreamingTest(h, p)
+
+    # For car control
+    # HOST, PORT = "192.168.0.105", 8000
+    # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # server_socket.bind((HOST, PORT))
+    # server_socket.listen(1)
+    # connection, client_address = server_socket.accept()
+
+    # import pdb;pdb.set_trace()
+

@@ -12,6 +12,10 @@ HOST_PORT = 8000
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 clientsocket.connect((HOST_IP, HOST_PORT))
 connection = clientsocket.makefile('wb')
+print("Connection Established")
+print(f"Server's addr: {HOST_IP}, port {HOST_PORT}")
+print("Streaming Video from usb cam")
+
 cap=cv2.VideoCapture(0)
 
 # used to record the time when we processed last frame 
@@ -21,7 +25,7 @@ new_frame_time = 0
 try:
     while True:
         ret,frame=cap.read()
-        frame = cv2.resize(frame, (480, 200))
+        frame = cv2.resize(frame, (300, 200))
 
         ############ CALCULATING FPS ##################
         new_frame_time = time.time()
@@ -33,7 +37,7 @@ try:
         prev_frame_time = new_frame_time
         fps = int(fps)
         
-        print(fps)
+        print(f"FPS {fps}")
         # frame = camera.get_frame()
         # Serialize frame
         data = pickle.dumps(frame)
