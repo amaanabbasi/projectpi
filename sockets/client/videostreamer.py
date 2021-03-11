@@ -4,6 +4,7 @@ import struct
 import time 
 import cv2
 import pickle
+import sys
 # from camera.camera import Camera
 
 HOST_IP = "192.168.0.107"
@@ -38,14 +39,15 @@ try:
         prev_frame_time = new_frame_time
         fps = int(fps)
 
-        print(f"FPS {fps}")
+        
         # frame = camera.get_frame()
         # Serialize frame
         data = pickle.dumps(frame)
 
         # Send message length first
         message_size = struct.pack("=L", len(data)) ### CHANGED
-
+        
+        print(f"FPS {fps} size of data {sys.getsizeof(data)} frame shape {frame.shape}")
         # Then data
         
         clientsocket.sendall(message_size + data)

@@ -16,11 +16,11 @@ def client_program(car):
     print("Connection Established")
     print(f"Server's addr: {HOST_IP}, port {HOST_PORT}")
     print("Waiting for commands.")
-    flag = input("Turn ignition on? (Y)")
+    # flag = input("Turn ignition on? (Y)")
     try:
         while True:
             
-            data = cli_soc.recv(10).decode()  # receive response
+            data = cli_soc.recv(52).decode()  # receive response
 
             # print(f"Received from server:  steering angle {data}")  # show in terminal
 
