@@ -6,10 +6,11 @@ import cv2
 import pickle
 # from camera.camera import Camera
 
-HOST_IP = "192.168.0.105"
+HOST_IP = "192.168.0.107"
 HOST_PORT = 8000
 # create socket and bind host
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 clientsocket.connect((HOST_IP, HOST_PORT))
 connection = clientsocket.makefile('wb')
 print("Connection Established")
@@ -25,7 +26,7 @@ new_frame_time = 0
 try:
     while True:
         ret,frame=cap.read()
-        frame = cv2.resize(frame, (300, 200))
+        frame = cv2.resize(frame, (200, 200))
 
         ############ CALCULATING FPS ##################
         new_frame_time = time.time()
@@ -36,7 +37,7 @@ try:
         fps = 1/(new_frame_time-prev_frame_time)
         prev_frame_time = new_frame_time
         fps = int(fps)
-        
+
         print(f"FPS {fps}")
         # frame = camera.get_frame()
         # Serialize frame
@@ -44,10 +45,13 @@ try:
 
         # Send message length first
         message_size = struct.pack("=L", len(data)) ### CHANGED
-        
+
         # Then data
-        clientsocket.sendall(message_size + data)
         
+        clientsocket.sendall(message_size + data)
+
+
 finally:
+    print("closing")
     connection.close()
     clientsocket.close()

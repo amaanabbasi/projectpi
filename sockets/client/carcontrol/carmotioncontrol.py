@@ -17,7 +17,8 @@ class CarMotionControl():
         GPIO.setup(self.MotorL, GPIO.OUT)
         GPIO.setup(self.MotorR, GPIO.OUT)
 
-
+        self.pwm = GPIO.PWM(MotorF, 100)
+        
         #display user controls
         print ('W forward')
         print ('S Reverse')
@@ -57,14 +58,11 @@ class CarMotionControl():
 
     # For speed control, switching b/w two speed values
     # 50 & 100 
-    def speed(self):
-        # self.pwm.start(100)
-        if self.pwm == 50:
-            self.pwm.ChangeDutyCycle(100)
-            print("Full Speed")
-        elif self.pwm == 100:
-            self.pwm.ChangeDutyCycle(50)
-            print("Half Speed") 
+
+    # def pwm_start():
+
+    def start(self):
+        self.pwm.start(36)
     
     def stop(self):
         print("Stop")

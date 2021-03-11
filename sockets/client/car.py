@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 from carcontrol.carmotioncontrol import CarMotionControl
 from carcontrol.config import *
 
-HOST_IP = "192.168.0.105"
+HOST_IP = "192.168.0.107"
 HOST_PORT = 8001
 
 def client_program(car):
@@ -16,13 +16,13 @@ def client_program(car):
     print("Connection Established")
     print(f"Server's addr: {HOST_IP}, port {HOST_PORT}")
     print("Waiting for commands.")
-
-    try: 
+    flag = input("Turn ignition on? (Y)")
+    try:
         while True:
             
-            data = cli_soc.recv(1024).decode()  # receive response
+            data = cli_soc.recv(10).decode()  # receive response
 
-            print(f"Received from server:  steering angle{data}")  # show in terminal
+            # print(f"Received from server:  steering angle {data}")  # show in terminal
 
             steering_angle = int(data)    
             speed = 20
@@ -45,10 +45,12 @@ def client_program(car):
                 car.steeringsstop()
 
             elif deviation > 10:
+                car.start()
                 car.right()
                 
 
             elif deviation < -10:
+                car.start()
                 car.left()
 
             derivative = kd * (error - lastError) / dt
