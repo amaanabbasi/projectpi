@@ -6,10 +6,11 @@ import cv2
 import math
 
 
-HOST_IP, HOST_PORT = '192.168.0.105', 8001
-ser_soc = socket.socket()
+HOST_IP, HOST_PORT = '192.168.0.107', 8001
+ser_soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+ser_soc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 ser_soc.bind((HOST_IP, HOST_PORT))
-ser_soc.listen(2)
+ser_soc.listen(20)
 conn, address = ser_soc.accept()
 print("Connection Established")
 print(f"Server's addr: {HOST_IP}, port {HOST_PORT}")
@@ -18,7 +19,9 @@ print("Waiting for video stream.")
 def server_program(data):
     # receive data stream. it won't accept data packet greater than 1024 bytes
     data = str(data)
+    print(f"{data} {type(data)}command data size: {sys.getsizeof(data)}")
     conn.send(data.encode())  # send data to the client
+    # conn.send(data)
 
 def detect_edges(frame):
     # filter for blue lane lines
@@ -183,11 +186,13 @@ def get_steering_angle(frame, lane_lines):
 
     return steering_angle
 
+import sys
 
 class VideoStreamingTest(object):
     def __init__(self, host, port):
 
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_socket.bind((host, port))
         self.server_socket.listen(10)
         self.connection, self.client_address = self.server_socket.accept()
@@ -200,30 +205,38 @@ class VideoStreamingTest(object):
         self.payload_size = struct.calcsize("=L")
         self.streaming()
 
+        print("Host: ", self.host_name + ' ' + self.host_ip)
+        print("Connection from: ", self.client_address)
+        print("Streaming...")
+        print("Press 'q' to exit")
+
+
     def streaming(self):
         try:
+
             while True:
-                print("Host: ", self.host_name + ' ' + self.host_ip)
-                print("Connection from: ", self.client_address)
-                print("Streaming...")
-                print("Press 'q' to exit")
-                print("server")
                 # Retrieve message size
                 while len(self.data) < self.payload_size:
-                    self.data += self.connection.recv(4096)
+                    self.data += self.connection.recv(2048)
+
+                
 
                 packed_msg_size = self.data[:self.payload_size]
                 self.data = self.data[self.payload_size:]
-                print(packed_msg_size)
+                
                 msg_size = struct.unpack("=L", packed_msg_size)[0] ### CHANGED
 
                 # Retrieve all data based on message size
                 while len(self.data) < msg_size:
                     self.data += self.connection.recv(4096)
 
+                # print(f"size of image in bytes: {sys.getsizeof(self.data)}")
+                
                 frame_data = self.data[:msg_size]
                 self.data = self.data[msg_size:]
-
+                
+               
+                
                 # Extract frame
                 frame = pickle.loads(frame_data)
 
@@ -234,7 +247,10 @@ class VideoStreamingTest(object):
                 lane_lines_image = display_lines(frame, lane_lines)
                 steering_angle = get_steering_angle(frame, lane_lines) #pass value through socket
                 # print(steering_angle)
-                server_program(steering_angle)
+                try:
+                    server_program(steering_angle)
+                except Exception as e:
+                    print(e)
                 heading_image = display_heading_line(lane_lines_image, steering_angle)
                 # Display
                 cv2.imshow('frame', heading_image)
@@ -246,18 +262,12 @@ class VideoStreamingTest(object):
             self.connection.close()
             self.server_socket.close()
 
-if __name__ == '__main__':
-    # host, port for video streaming
-    h, p = "192.168.0.105", 8000
-    print("s")
-    VideoStreamingTest(h, p)
 
-    # For car control
-    # HOST, PORT = "192.168.0.105", 8000
-    # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # server_socket.bind((HOST, PORT))
-    # server_socket.listen(1)
-    # connection, client_address = server_socket.accept()
+# host, port for video streaming
+h, p = HOST_IP, 8000
+VideoStreamingTest(h, p)
 
-    # import pdb;pdb.set_trace()
+
+
+
 
