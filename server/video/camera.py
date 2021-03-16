@@ -1,6 +1,6 @@
 import os
 import cv2
-from camera.base_camera import BaseCamera
+from .base_camera import BaseCamera
 import time
 
 class Camera(BaseCamera):

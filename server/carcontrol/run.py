@@ -1,9 +1,8 @@
 
-from carcontrol import carmotioncontrol
-from carcontrol.config import *
+from . import carmotioncontrol, config
 import sys, termios, time, tty
 
-car = carmotioncontrol.CarMotionControl(MotorF, MotorB, MotorR, MotorL)
+car = carmotioncontrol.CarMotionControl(config.MotorF, config.MotorB, config.MotorR, config.MotorL)
 
 
 def forward():
