@@ -14,6 +14,9 @@
           <h1 class="title is-1">Live View</h1>
           <img src="{{ url_for('video_feed') }}">
         </div>
+        <div id="currentcommand" class="column">
+          Stop
+        </div>
       </div>
     </div>
   </section>
@@ -22,6 +25,7 @@
     $(document).on("keydown", function (event) {
       if (event.keyCode === 87 || event.keyCode === 119) { // W
         console.log("W");
+        document.getElementById("currentcommand").innerHTML = "Forward";
         $.ajax({
           type: 'GET',
           url: "/forward",
@@ -29,23 +33,27 @@
         });
       } else if (event.keyCode === 83 || event.keyCode === 115) { // S
         console.log("S");
+        document.getElementById("currentcommand").innerHTML = "Reverse";
         $.ajax({
           type: 'GET',
           url: "/reverse",
         });
       } else if (event.keyCode === 65 || event.keyCode === 97) { // A
+        document.getElementById("currentcommand").innerHTML = "Left";
         $.ajax({
           type: 'GET',
           url: "/left",
         });
       }
       else if (event.keyCode === 68 || event.keyCode === 100) { // D
+        document.getElementById("currentcommand").innerHTML = "Right";
         $.ajax({
           type: 'GET',
           url: "/right",
         });
       }
       else if (event.keyCode === 80 || event.keyCode === 112) { // P
+        document.getElementById("currentcommand").innerHTML = "Stop";
         $.ajax({
           type: 'GET',
           url: "/stop",
