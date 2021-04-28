@@ -16,6 +16,7 @@ def client_program(car):
     print("Connection Established")
     print(f"Server's addr: {HOST_IP}, port {HOST_PORT}")
     print("Waiting for commands.")
+    f = open("commands.txt", "a")
     # flag = input("Turn ignition on? (Y)")
     try:
         while True:
@@ -39,19 +40,26 @@ def client_program(car):
             deviation = steering_angle - 90
             error = abs(deviation)
             
+            
+            
+            
+
             if deviation < 10 and deviation > -10:
                 deviation = 0
                 error = 0
                 car.steeringsstop()
+                f.write("0\n") # x -> stop steering
 
             elif deviation > 10:
                 car.start()
                 car.right()
+                f.write("1\n") # x -> right
                 
 
             elif deviation < -10:
                 car.start()
                 car.left()
+                f.write("-1\n") # x -> left
 
             derivative = kd * (error - lastError) / dt
             proportional = kp * error
@@ -73,6 +81,7 @@ def client_program(car):
         print("Closing Connection, Releasing GPIO")
         cli_soc.close()  # close the connection
         car.exit()
+        f.close()
         
 
     

@@ -183,7 +183,7 @@ def get_steering_angle(frame, lane_lines):
     angle_to_mid_deg = int(angle_to_mid_radian * 180.0 / math.pi)
     steering_angle = angle_to_mid_deg + 90
     #print(steering_angle)
-
+    
     return steering_angle
 
 import sys
@@ -254,6 +254,7 @@ class VideoStreamingTest(object):
                 heading_image = display_heading_line(lane_lines_image, steering_angle)
                 # Display
                 cv2.imshow('frame', heading_image)
+                cv2.imwrite(os.path.join("/dataset/", datetime.datetime.now().time() + '.jpg'), img)
                 cv2.waitKey(1)
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
