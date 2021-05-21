@@ -43,6 +43,7 @@ def client_program(car):
             if deviation < 10 and deviation > -10:
                 deviation = 0
                 error = 0
+                car.start()
                 car.steeringsstop()
                 f.write(f"{datetime.datetime.now().time()},0\n") # 0 -> stop steering
 

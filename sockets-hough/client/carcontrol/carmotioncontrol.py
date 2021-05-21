@@ -62,7 +62,7 @@ class CarMotionControl():
     # def pwm_start():
 
     def start(self):
-        self.pwm.start(36)
+        self.pwm.start(50)
     
     def stop(self):
         print("Stop")

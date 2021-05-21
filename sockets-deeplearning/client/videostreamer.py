@@ -26,7 +26,6 @@ prev_frame_time = 0
 new_frame_time = 0
 try:
     while True:
-        try
         ret,frame=cap.read()
         frame = cv2.resize(frame, (200, 200))
 

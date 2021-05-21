@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 from carcontrol.carmotioncontrol import CarMotionControl
 from carcontrol.config import *
 
-HOST_IP = "192.168.0.107"
+HOST_IP = "192.168.0.110"
 HOST_PORT = 8001
 
 def client_program(car):
@@ -29,19 +29,17 @@ def client_program(car):
             if direction == 1:
                 deviation = 0
                 error = 0
-                car.steeringsstop()
-                f.write("0\n") # x -> stop steering
+                car.start()
+                car.steeringsstop() # x -> stop steering
 
             elif direction == 2:
                 car.start()
-                car.right()
-                f.write("1\n") # x -> right
+                car.right() # x -> right
                 
 
             elif direction == 0:
                 car.start()
-                car.left()
-                f.write("-1\n") # x -> left
+                car.left() # x -> left
 
   
             car.forward()

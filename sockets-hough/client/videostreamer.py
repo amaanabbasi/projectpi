@@ -7,7 +7,7 @@ import pickle
 import sys
 # from camera.camera import Camera
 
-HOST_IP = "192.168.0.107"
+HOST_IP = "192.168.0.110"
 HOST_PORT = 8000
 # create socket and bind host
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

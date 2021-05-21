@@ -19,7 +19,7 @@ print ('W forward')
 print ('S Reverse')
 print ('A Left')
 print ('D Right')
-print ('Q Stop')
+print ('P Stop')
 print ('E Exit Programme')
 
 # setting up the user input system
@@ -74,7 +74,7 @@ while True:
         left()
     if(char == "d"):
         right()
-    if(char == "e"):
+    if(char == "p"):
         stop()
         print("Stopping motor")
 
