@@ -254,7 +254,7 @@ class VideoStreamingTest(object):
                 heading_image = display_heading_line(lane_lines_image, steering_angle)
                 # Display
                 cv2.imshow('frame', heading_image)
-                cv2.imwrite(os.path.join("/dataset/", datetime.datetime.now().time() + '.jpg'), img)
+                cv2.imwrite(os.path.join("dataset/", datetime.datetime.now().time() + '.jpg'), img)
                 cv2.waitKey(1)
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):

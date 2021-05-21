@@ -17,7 +17,7 @@ class CarMotionControl():
         GPIO.setup(self.MotorL, GPIO.OUT)
         GPIO.setup(self.MotorR, GPIO.OUT)
 
-        self.pwm = GPIO.PWM(MotorF, 100)
+        self.pwm = GPIO.PWM(MotorF, 36)
         
         #display user controls
         print ('W forward')

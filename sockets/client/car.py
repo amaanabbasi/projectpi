@@ -1,12 +1,12 @@
 import socket
 import math
 import sys
-import time
+import time, datetime
 import RPi.GPIO as GPIO
 from carcontrol.carmotioncontrol import CarMotionControl
 from carcontrol.config import *
 
-HOST_IP = "192.168.0.107"
+HOST_IP = "192.168.0.110"
 HOST_PORT = 8001
 
 def client_program(car):
@@ -40,26 +40,22 @@ def client_program(car):
             deviation = steering_angle - 90
             error = abs(deviation)
             
-            
-            
-            
-
             if deviation < 10 and deviation > -10:
                 deviation = 0
                 error = 0
                 car.steeringsstop()
-                f.write("0\n") # x -> stop steering
+                f.write(f"{datetime.datetime.now().time()},0\n") # 0 -> stop steering
 
             elif deviation > 10:
                 car.start()
                 car.right()
-                f.write("1\n") # x -> right
+                f.write(f"{datetime.datetime.now().time()},1\n")  # x -> right
                 
 
             elif deviation < -10:
                 car.start()
                 car.left()
-                f.write("-1\n") # x -> left
+                f.write(f"{datetime.datetime.now().time()},-1\n")  # x -> left
 
             derivative = kd * (error - lastError) / dt
             proportional = kp * error

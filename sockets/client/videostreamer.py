@@ -7,7 +7,7 @@ import pickle
 import sys
 # from camera.camera import Camera
 
-HOST_IP = "192.168.0.107"
+HOST_IP = "192.168.0.110"
 HOST_PORT = 8000
 # create socket and bind host
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,6 +26,7 @@ prev_frame_time = 0
 new_frame_time = 0
 try:
     while True:
+        try
         ret,frame=cap.read()
         frame = cv2.resize(frame, (200, 200))
 
@@ -51,9 +52,11 @@ try:
         # Then data
         
         clientsocket.sendall(message_size + data)
+        
 
 
 finally:
     print("closing")
     connection.close()
     clientsocket.close()
+    
