@@ -4,9 +4,11 @@ import struct
 import numpy as np
 import cv2
 import math
+import datetime, os
 
 
-HOST_IP, HOST_PORT = '192.168.0.107', 8001
+
+HOST_IP, HOST_PORT = '192.168.0.110', 8001
 ser_soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 ser_soc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 ser_soc.bind((HOST_IP, HOST_PORT))
@@ -210,6 +212,21 @@ class VideoStreamingTest(object):
         print("Streaming...")
         print("Press 'q' to exit")
 
+    def dataset(self, steering_angle, heading_image):
+        deviation = steering_angle - 90
+        error = abs(deviation)
+        
+        if deviation < 10 and deviation > -10:
+            deviation = 0
+            error = 0
+            cv2.imwrite(os.path.join("dataset/0/", str(datetime.datetime.now().time()) + '.jpg'), heading_image)
+        
+        elif deviation > 10:
+            cv2.imwrite(os.path.join("dataset/1/", str(datetime.datetime.now().time()) + '.jpg'), heading_image)
+
+        elif deviation < -10:
+            cv2.imwrite(os.path.join("dataset/-1/", str(datetime.datetime.now().time()) + '.jpg'), heading_image)
+
 
     def streaming(self):
         try:
@@ -252,9 +269,10 @@ class VideoStreamingTest(object):
                 except Exception as e:
                     print(e)
                 heading_image = display_heading_line(lane_lines_image, steering_angle)
+                # self.dataset(steering_angle, heading_image)
                 # Display
                 cv2.imshow('frame', heading_image)
-                cv2.imwrite(os.path.join("/dataset/", datetime.datetime.now().time() + '.jpg'), img)
+                # cv2.imwrite(os.path.join("dataset/", str(datetime.datetime.now().time()) + '.jpg'), heading_image)
                 cv2.waitKey(1)
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -267,7 +285,6 @@ class VideoStreamingTest(object):
 # host, port for video streaming
 h, p = HOST_IP, 8000
 VideoStreamingTest(h, p)
-
 
 
 
