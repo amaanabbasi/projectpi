@@ -15,19 +15,6 @@ Raspberry pi 3 or Rpi3 will be the main component of the project and it can be c
 
 We have two dc motors connected to a L298N motor driver. This circuit is responsible for the movement of our car. Connecting DC motors directly to the GPIO pins of Rpi3 can damage the pins hence a motor driver  is used as shown in Figure 
 
-*Components Prices*
-
-Raspberry PI GPIO (1) The Raspberry Pi is a low cost (₹ 3,010), credit-card sized computer that plugs into a computer monitor or TV, and uses a standard keyboard and mouse. It is a capable little device that enables people of all ages to explore computing, and to learn how to program in languages like Scratch and Python. This is going to be the CPU of our self-driving car. Other options are Arduino UNO for the CPU but I choose it because raspberry pi has good support for python.
-
-L298N (2) (₹ 322) is an IC which contains a dual H bridge. Hence two motors can be connected to it. It allows the motor to run in clockwise and anti-clockwise direction. It prevents any damage to the Rpi3.
-
-USB Camera (3) (₹ 1,195) USB camera specifications - Video Capture Resolution 1080p, Connector Type USB, Lens Type  Wide-Angle. 
-
-Portable Power Supply (4) We will be using an Ambrane power bank (₹ 699) that is used to power the raspberry pi 3 using type 2.0 usb cable that can transfer current up to 2.4A,  as well as the dc motors (front & rear both) using a usb cable that is cut open from the other end. Power bank specifications Ambrane Model PP-111, Capacity 10000 mAh, Input: 5V/2.1A, Output: 5V/2.4A.
-
-DC motor(s) (5,6) We have two types of dc motors (₹30)- The rear motor is a 12-volt dc motor which is responsible for the forward and backward movement of the car and the front motor is a 5-volt dc motor which turns the car left or right depending on the command it receives.
-
-SD card Sd card is required to store the Raspberry pi os and project files for which we will be using a 32 GB 96Mbps SD card (₹ 369). Any card size would work but it is recommended to have at least 8 GB storage.
 
 # Circuit
 
@@ -36,12 +23,10 @@ The circuit as shown in the figure below, is responsible for controlling the mot
 ![image](https://user-images.githubusercontent.com/30196830/212731470-8c7b5550-860a-457d-9f0b-a7fe660f4ba8.png)
 
 
-# Positioning the Camera
+# Data Flow
 
-Positioning the camera - If the view of the camera is too far sighted then the car will receive the commands too early from the appropriate time, and likewise if it's positioned too close then it will receive the commands after the car has passed. The camera should be positioned not too close and not too far just at a right spot which can be done using hit and try method. Shown below is a snapshot of the car and the final camera position, this was the position that gave the best results.
-
-
-![image](https://user-images.githubusercontent.com/30196830/212731728-e127fd83-c59e-4a3f-8374-cf5a01df9145.png)
+Data flow diagram of the Vehicle
+![image](https://user-images.githubusercontent.com/30196830/212735119-1f6f48c3-6db7-42f1-bf1f-bf23b209aadd.png)
 
 
 # Controlling the Car
@@ -57,5 +42,18 @@ Controlling the car manually using a keyboard, this is going to be the first app
 The car has a usb camera attached at the front so that the user can get a live video and navigate the car safely. We are using flask a python micro web framework as the web application backend. After we boot up the car (booting up the Rpi3) we need to run the flask server on it, which is going to serve a webpage at the Rpi3’s local Ip address. The user can then access the web page from a pc connected to the same network. The user is going to be presented with a live stream from the car’s usb camera and an interface to communicate with the car. The user can now navigate the car using the key controls mentioned above. 
 
 
+![image](https://user-images.githubusercontent.com/30196830/212735547-efba9d52-d734-4dac-8c4e-603c19d4170b.png)
+
+# Circuit Diagram
+![image](https://user-images.githubusercontent.com/30196830/212737688-af179d6b-8ba7-4f26-9b7f-b2a975ad3e96.png)
+
+# Training
+![image](https://user-images.githubusercontent.com/30196830/212738575-a152df59-9416-4042-be4d-e34103987122.png)
+![image](https://user-images.githubusercontent.com/30196830/212738588-55f06940-c706-4bae-a600-3c015774fd91.png)
+![image](https://user-images.githubusercontent.com/30196830/212738595-4cf9de2b-850f-4b76-bfe2-80c42147a756.png)
+
+# Results
+![image](https://user-images.githubusercontent.com/30196830/212739218-ff5056be-5c3e-4419-85c3-6fb9ad979608.png)
+![image](https://user-images.githubusercontent.com/30196830/212739231-580bb75d-ac40-43a3-8ad3-cac7fd478e6e.png)
 
 
