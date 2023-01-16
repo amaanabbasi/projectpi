@@ -29,7 +29,7 @@ DC motor(s) (5,6) We have two types of dc motors (₹30)- The rear motor is a 12
 
 SD card Sd card is required to store the Raspberry pi os and project files for which we will be using a 32 GB 96Mbps SD card (₹ 369). Any card size would work but it is recommended to have at least 8 GB storage.
 
-# Cicuit
+# Circuit
 
 The circuit as shown in the figure below, is responsible for controlling the motors. It contains basically two circuit boards - the green colored one is the Rpi3 (left) and the red one is the L298N (right) motor driver. The Rpi3 has four usb ports, one of which is used by a usb camera
 
